@@ -24,7 +24,7 @@ export default function Header() {
         '/assets/ticket': 'AMS',
     };
 
-    let pageTitle = pageTitles[usePathName] || 'HRMS';
+    const pageTitle = pageTitles[usePathName] || 'HRMS';
     return (
         <header className={clsx("p-3 bg-white fixed z-50 top-0 left-0 right-0 shadow-xl", {
             'left-72 transition delay-150 ease-in-out': navBarContext?.isNavBarVisible && pageTitle !== 'Central System'

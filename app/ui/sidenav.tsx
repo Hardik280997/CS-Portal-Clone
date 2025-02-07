@@ -10,7 +10,7 @@ export default function SideNav() {
     const RoutePaths: Array<string> = ['/dashboard', '/timetracker', '/assets', '/hrms']
     const separatedPath: string = `/${usePathName.split('/')[1]}`
     const pathName: boolean = RoutePaths.includes(separatedPath)
-    let navBarContext = useNavBar()
+    const navBarContext = useNavBar()
     interface HamburgerLinks {
         name: string,
         href: string,
