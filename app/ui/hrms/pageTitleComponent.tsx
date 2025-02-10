@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { usePageHeader } from "./pageTitleContext";
 
 const PageTitleComponent = ({ titleName }: { titleName: string }) => {
-    let pageHeader = usePageHeader()
+    const pageHeader = usePageHeader()
     useEffect(() => {
         pageHeader?.updatePageHeader(titleName)
     }, [])
