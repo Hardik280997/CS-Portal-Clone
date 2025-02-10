@@ -6,7 +6,7 @@ import { useNavBar } from "../ui/navBarContext";
 import clsx from "clsx";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-    let navBarContext = useNavBar()
+    const navBarContext = useNavBar()
     return (
         <section>
             <Header />

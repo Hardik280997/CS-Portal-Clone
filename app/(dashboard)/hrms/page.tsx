@@ -10,7 +10,7 @@ export default function Page() {
     const pageTitle = capitalize(separatedPath[separatedPath.length - 1])
     return (
         <div>
-            <PageHeaderComponent titleName='Dashboard' />
+            <PageHeaderComponent titleName={pageTitle} />
         </div>
     );
 }

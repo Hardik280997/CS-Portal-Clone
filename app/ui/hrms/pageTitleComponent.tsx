@@ -1,12 +1,9 @@
 'use client'
 import { useEffect } from "react";
-import clsx from "clsx";
-import { useNavBar } from "../navBarContext";
 import { usePageHeader } from "./pageTitleContext";
 
 const PageTitleComponent = ({ titleName }: { titleName: string }) => {
     let pageHeader = usePageHeader()
-    const navBarContext = useNavBar()
     useEffect(() => {
         pageHeader?.updatePageHeader(titleName)
     }, [])
