@@ -18,16 +18,17 @@ interface NavbarProviderProps {
 }
 
 export const NavBarContextProvider = ({ children }: NavbarProviderProps) => {
-
-    // let initialState = () => {
-    //     let navBarState = localStorage.getItem('isNavBarVisible')
-    //     return navBarState ? JSON.parse(navBarState) : false
-    // }
-
     const [isNavBarVisible, setIsNavBarVisible] = useState<boolean>(false)
 
     useEffect(() => {
-        // localStorage.setItem('isNavBarVisible', JSON.stringify(isNavBarVisible));
+        const navBarState = localStorage.getItem('isNavBarVisible');
+        if (navBarState) {
+            setIsNavBarVisible(JSON.parse(navBarState))
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('isNavBarVisible', JSON.stringify(isNavBarVisible));
     }, [isNavBarVisible]);
 
     const setNavBarVisible = () => {

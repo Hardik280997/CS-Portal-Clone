@@ -20,7 +20,9 @@ export default {
         'close-navbar': '#7cb900',
         'navbar-color': '#232323',
         'navbar-hr-color': 'rgba(0, 0, 0, 0.14)',
-        'green-color': '#8cc714'
+        'green-color': '#8cc714',
+        'primary-btn-hover': '#474747',
+        'secondary-btn-hover': '#e0e0e0'
       },
       // backgroundImage: {
       //   'custom-gradient': 'linear-gradient(135deg, #153677, #4e085f)'

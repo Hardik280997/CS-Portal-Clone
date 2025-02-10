@@ -1,3 +1,4 @@
+import { PageHeaderProvider } from "@/app/ui/hrms/pageTitleContext";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,10 +7,12 @@ export const metadata: Metadata = {
     icons: 'https://hrms.crestinfosystems.net/favicon.ico'
 };
 
-export default function Layout({children}: {children: React.ReactNode}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
     return (
-        <section>
+        // <div className="mt-20">
+        <PageHeaderProvider>
             {children}
-        </section>
+        </PageHeaderProvider>
+        // </div>
     );
 }
