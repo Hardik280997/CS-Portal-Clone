@@ -1,4 +1,4 @@
-import { PageHeaderProvider } from "@/app/ui/hrms/pageTitleContext";
+import { PageHeaderProvider } from "@/app/ui/hrms/pagetitle.context";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

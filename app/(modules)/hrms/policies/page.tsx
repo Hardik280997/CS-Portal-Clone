@@ -1,6 +1,6 @@
 'use client'
-import PageHeaderComponent from "@/app/ui/hrms/pageHeaderComponent";
-import TableComponent from "@/app/ui/tableComponent";
+import PageHeaderComponent from "@/app/ui/hrms/pageheader.component";
+import PoliciesGridComponent from "@/app/ui/policies-grid.component";
 import { capitalize } from "@/app/ui/utilityFunction";
 import { usePathname } from "next/navigation";
 
@@ -14,7 +14,7 @@ export default function Page() {
                 <PageHeaderComponent titleName={pageTitle} />
             </div>
             <div>
-                <TableComponent />
+                <PoliciesGridComponent />
             </div>
         </>
 

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import PageTitleComponent from "./pageTitleComponent";
+import PageTitleComponent from "./pagetitle.component";
 
 const PageHeaderComponent = ({ titleName }: { titleName: string }) => {
     const addEntryBtnText = titleName === 'Leaves' ? 'Apply Leave' : titleName === 'Assistance' ? 'Create Ticket' : titleName === 'Referral' ? 'Add Referral' : titleName === 'Users' ? 'Add User' : 'Apply WFH'
@@ -24,7 +24,7 @@ const PageHeaderComponent = ({ titleName }: { titleName: string }) => {
                         <input className="outline-none border-none" placeholder="Search here" type="text" />
                     </span>
                 </div>
-                <button className={clsx("flex items-center gap-2 p-2 bg-navbar-color text-white rounded-lg m-2.5 pl-4 pr-4 hover:bg-primary-btn-hover", {
+                <button className={clsx("flex items-center gap-2 p-2 bg-primary-text-color text-white rounded-lg m-2.5 pl-4 pr-4 hover:bg-primary-btn-hover", {
                     'hidden': addWidgetArray
                 })} type="button">
                     {addEntryBtnText}
@@ -32,7 +32,7 @@ const PageHeaderComponent = ({ titleName }: { titleName: string }) => {
                         <svg className="w-6 h-6" stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 11V7H13V11H17V13H13V17H11V13H7V11H11ZM12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z"></path></svg>
                     </span>
                 </button>
-                <button className={clsx("flex items-center gap-2 p-2 bg-navbar-color text-white rounded-lg m-2.5 pl-4 pr-4 hover:bg-primary-btn-hover", {
+                <button className={clsx("flex items-center gap-2 p-2 bg-primary-text-color text-white rounded-lg m-2.5 pl-4 pr-4 hover:bg-primary-btn-hover", {
                     'hidden': titleName !== 'Leaves'
                 })} type="button">
                     Leave Info
@@ -40,7 +40,7 @@ const PageHeaderComponent = ({ titleName }: { titleName: string }) => {
                         <svg className="w-6 h-6" fill="currentColor" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="EventNoteIcon"><path d="M17 10H7v2h10v-2zm2-7h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-5-5H7v2h7v-2z"></path></svg>
                     </span>
                 </button>
-                <button className={clsx("flex items-center gap-2 p-2 bg-navbar-color text-white rounded-lg m-2.5 pl-4 pr-4 hover:bg-primary-btn-hover", {
+                <button className={clsx("flex items-center gap-2 p-2 bg-primary-text-color text-white rounded-lg m-2.5 pl-4 pr-4 hover:bg-primary-btn-hover", {
                     'hidden': filterBtnWidgetArray
                 })} type="button">
                     Filters

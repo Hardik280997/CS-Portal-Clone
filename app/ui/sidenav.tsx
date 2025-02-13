@@ -54,7 +54,7 @@ export default function SideNav() {
 
     return (
         <div className={
-            clsx("p-0 flex flex-col bg-navbar-color w-72 h-full fixed z-50 top-0 left-0 bottom-0 text-white", {
+            clsx("p-0 flex flex-col bg-primary-text-color w-72 h-full fixed z-50 top-0 left-0 bottom-0 text-white", {
                 'hidden transition delay-150 ease-in-out': !navBarContext?.isNavBarVisible
             })}>
             <div className="m-4 flex justify-between items-center">

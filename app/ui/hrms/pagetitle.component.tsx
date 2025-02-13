@@ -1,12 +1,12 @@
 'use client'
 import { useEffect } from "react";
-import { usePageHeader } from "./pageTitleContext";
+import { usePageHeader } from "./pagetitle.context";
 
 const PageTitleComponent = ({ titleName }: { titleName: string }) => {
     const pageHeader = usePageHeader()
     useEffect(() => {
         pageHeader?.updatePageHeader(titleName)
-    }, [])
+    })
 
     return (
         // <div className={clsx({
