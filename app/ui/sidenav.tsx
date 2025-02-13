@@ -14,32 +14,31 @@ export default function SideNav() {
     interface HamburgerLinks {
         name: string,
         href: string,
-        icon: string,
         route: string
         child?: HamburgerLinks[]
     }
     const links: HamburgerLinks[] = [
-        { name: 'Dashboard', href: pathName ? separatedPath : '/dashboard', icon: 'HomeIcon', route: '/timetracker' },
-        { name: 'Timesheets', href: '/timetracker/timesheets', icon: 'HomeIcon', route: '/timetracker' },
+        { name: 'Dashboard', href: pathName ? separatedPath : '/dashboard', route: '/timetracker' },
+        { name: 'Timesheets', href: '/timetracker/timesheets', route: '/timetracker' },
         {
-            name: 'Project Management', href: ['/timetracker/projects', '/timetracker/todos'].includes(usePathName) ? usePathName : '', icon: 'HomeIcon', route: '/timetracker', child: [
-                { name: 'Projects', href: '/timetracker/projects', icon: 'HomeIcon', route: '/timetracker' },
-                { name: 'To Dos', href: '/timetracker/todos', icon: 'HomeIcon', route: '/timetracker' }
+            name: 'Project Management', href: ['/timetracker/projects', '/timetracker/todos'].includes(usePathName) ? usePathName : '', route: '/timetracker', child: [
+                { name: 'Projects', href: '/timetracker/projects', route: '/timetracker' },
+                { name: 'To Dos', href: '/timetracker/todos', route: '/timetracker' }
             ]
         },
-        { name: 'Reports', href: '/timetracker/reports', icon: 'HomeIcon', route: '/timetracker' },
+        { name: 'Reports', href: '/timetracker/reports', route: '/timetracker' },
 
-        { name: 'Dashboard', href: pathName ? separatedPath : '/dashboard', icon: 'HomeIcon', route: '/hrms' },
-        { name: 'Leaves', href: '/hrms/leaves', icon: 'HomeIcon', route: '/hrms' },
-        { name: 'WFH', href: '/hrms/wfh', icon: 'HomeIcon', route: '/hrms' },
-        { name: 'Assistance', href: '/hrms/assistance', icon: 'HomeIcon', route: '/hrms' },
-        { name: 'Appraisals', href: '/hrms/appraisals', icon: 'HomeIcon', route: '/hrms' },
-        { name: 'Policies', href: '/hrms/policies', icon: 'HomeIcon', route: '/hrms' },
-        { name: 'Referral', href: '/hrms/referral', icon: 'HomeIcon', route: '/hrms' },
-        { name: 'Users', href: '/hrms/users', icon: 'HomeIcon', route: '/hrms' },
+        { name: 'Dashboard', href: pathName ? separatedPath : '/dashboard', route: '/hrms' },
+        { name: 'Leaves', href: '/hrms/leaves', route: '/hrms' },
+        { name: 'WFH', href: '/hrms/wfh', route: '/hrms' },
+        { name: 'Assistance', href: '/hrms/assistance', route: '/hrms' },
+        { name: 'Appraisals', href: '/hrms/appraisals', route: '/hrms' },
+        { name: 'Policies', href: '/hrms/policies', route: '/hrms' },
+        { name: 'Referral', href: '/hrms/referral', route: '/hrms' },
+        { name: 'Users', href: '/hrms/users', route: '/hrms' },
 
-        { name: 'Assets', href: '/assets', icon: 'HomeIcon', route: '/assets' },
-        { name: 'Asset Tickets', href: '/assets/ticket', icon: 'HomeIcon', route: '/assets' }
+        { name: 'Assets', href: '/assets', route: '/assets' },
+        { name: 'Assets Tickets', href: '/assets/ticket', route: '/assets' }
     ].filter(path => path.route === separatedPath)
 
     interface sideNavBarImages {
@@ -75,13 +74,7 @@ export default function SideNav() {
                                 <div key={linkEle.name} className="group">
                                     <Link key={linkEle.name} href={linkEle.href}>
                                         <div className="flex items-center gap-3 w-full group" id="rotateDiv">
-                                            <svg className={clsx("w-6 h-6", {
-                                                'text-green-color': usePathName === linkEle.href,
-                                                'text-box-grey-border': usePathName !== linkEle.href,
-                                                'group-hover:text-green-color': true
-                                            })} stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M13 19H19V9.97815L12 4.53371L5 9.97815V19H11V13H13V19ZM21 20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V9.48907C3 9.18048 3.14247 8.88917 3.38606 8.69972L11.3861 2.47749C11.7472 2.19663 12.2528 2.19663 12.6139 2.47749L20.6139 8.69972C20.8575 8.88917 21 9.18048 21 9.48907V20Z"></path>
-                                            </svg>
+                                            <Image src={usePathName === linkEle.href ? `/Images/${linkEle.name}.svg` : `/Images/${linkEle.name}-wc.svg`} height={25} width={25} alt={`${linkEle.name}-logo`} />
                                             <div className="flex justify-between w-full">
                                                 <span className={clsx("textmd", {
                                                     'text-white': usePathName === linkEle.href,
