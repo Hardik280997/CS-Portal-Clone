@@ -115,7 +115,7 @@ export default function Header() {
                     </div>
                 </div>
             </header>
-            <div className="hidden z-50 border-2 border-solid border-white floatingMenu bg-primary-text-color relative flex flex-wrap -mt-1 mr-12 pt-4 pb-4 w-[300] float-right rounded-xl items-center justify-evenly">
+            <div className="hidden z-50 border-2 border-solid border-white floatingMenu bg-primary-text-color relative flex flex-wrap -mt-1 mr-12 pt-4 pb-4 w-[300px] float-right rounded-xl items-center justify-evenly">
                 <Link href='/timetracker'>
                     <div className="flex flex-col gap-2 items-center">
                         <Image src="https://central.crestinfosystems.net/api/assets/1694434452354.png" width={30} height={32} alt="tms-logo" />
