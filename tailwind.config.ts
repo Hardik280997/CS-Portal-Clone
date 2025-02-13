@@ -32,7 +32,7 @@ export default {
         'edit-btn-hover': '#e2dede',
         'delete-btn': '#ffeff0',
         'delete-btn-icon': '#ff606b',
-        're': '#fbdfe1',
+        'delete-btn-hover': '#fbdfe1',
         'calendar-color': '#e8f8ca',
         'week-day-color': '#939393'
       },

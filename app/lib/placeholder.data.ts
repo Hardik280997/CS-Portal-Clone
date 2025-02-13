@@ -144,10 +144,10 @@ export const sampleData = {
         "currentPage": 1,
         "perPage": 10,
         "totalPages": 1,
-        "countofallleaves": 1,
+        "countofallleaves": 3,
         "countofpendingleaves": 1,
-        "countofrejectedleaves": 0,
-        "countofapprovedleaves": 0
+        "countofrejectedleaves": 1,
+        "countofapprovedleaves": 1
     }
 }
 

@@ -28,7 +28,7 @@ export default function Page() {
             reporting_to: 'Daisy Bhavsar',
             wfh_date: wfhDateObj,
             days_info: wfhDaysInfoObj,
-            leave_status: leaveData.leave_status
+            wfh_status: leaveData.leave_status
         })
     })
 

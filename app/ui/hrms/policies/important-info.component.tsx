@@ -34,6 +34,10 @@ const ImportantInfoComponent = ({ tabName }: { tabName: string }) => {
             tabName: 'Company Policies',
             policies: ['Performance Assessment and Salary Increment']
         },
+        {
+            tabName: 'Guidelines',
+            policies: ['Tips for Interviewers']
+        },
 
     ].filter(tabEle => tabEle.tabName === tabName)
 

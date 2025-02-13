@@ -29,9 +29,10 @@ const PoliciesGridComponent = () => {
             </div>
             <div className="tab-content flex w-full">
                 {tabArray.map((tabEle) => {
+                    const tabNameId = tabEle.toLowerCase().replace(' ', '-')
                     return (
-                        <div className="hidden m-6 flex flex-col gap-4 w-full" id={`${tabEle.toLowerCase().replace(' ', '-')}-content`} key={tabEle}>
-                            {tabEle === 'Holidays' ? (<HolidaysComponent />) : tabEle === 'Important Information' ? (<ImportantInfoComponent tabName='Important Information' />) : (<ImportantInfoComponent tabName='Company Policies' />)}
+                        <div className="hidden m-6 flex flex-col gap-4 w-full" id={`${tabNameId}-content`} key={tabEle}>
+                            {tabEle === 'Holidays' ? (<HolidaysComponent />) : (<ImportantInfoComponent tabName={tabEle} />)}
                         </div>
                     )
                 })}
@@ -41,26 +42,24 @@ const PoliciesGridComponent = () => {
 }
 
 const handleTabSelection = ({ tabName }: { tabName: string }) => {
-
-
-    const activeTabName = document.getElementsByClassName('active-tab')
-    const activeContentBox = document.getElementsByClassName(`active-content-box`)
+    const currentTabName = document.getElementById(`${tabName}`)
+    const tabCotentId = tabName.toLowerCase().replace(' ', '-')
+    const currentTabContentName = document.getElementById(`${tabCotentId}-content`)
+    const activeTabName = document.querySelector('.active-tab')
+    const activeContentBox = document.querySelector('.active-content-box');
 
     if (activeTabName) {
-        activeTabName.item(0)?.classList.remove('border-green-color')
-        activeTabName.item(0)?.classList.remove('border-b-2')
-        activeTabName.item(0)?.classList.remove('active-tab')
+        activeTabName?.classList.remove('border-green-color', 'border-b-2', 'active-tab')
     }
     if (activeContentBox) {
-        activeContentBox.item(0)?.classList.replace('block', 'hidden')
-        activeContentBox.item(0)?.classList.remove(`active-content-box`)
+        activeContentBox?.classList.replace('block', 'hidden')
+        activeContentBox?.classList.remove(`active-content-box`)
 
     }
-    document.getElementById(tabName)?.classList.toggle('border-green-color')
-    document.getElementById(tabName)?.classList.toggle('border-b-2')
-    document.getElementById(tabName)?.classList.toggle('active-tab')
-    document.getElementById(`${tabName.toLowerCase().replace(' ', '-')}-content`)?.classList.toggle(`active-content-box`)
-    document.getElementById(`${tabName.toLowerCase().replace(' ', '-')}-content`)?.classList.replace('hidden', 'block')
+    currentTabName?.classList.add('border-green-color', 'border-b-2', 'active-tab')
+
+    currentTabContentName?.classList.add(`active-content-box`)
+    currentTabContentName?.classList.replace('hidden', 'block')
 
 }
 

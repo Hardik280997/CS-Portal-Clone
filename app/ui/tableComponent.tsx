@@ -1,11 +1,12 @@
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GridTabType } from "./hrms/interfaces.hrms";
 import { capitalize } from "./utilityFunction";
 
 const TableComponent = <Type,>({ pageTitle, columns, dataArray }: { pageTitle: string, columns: Array<string>, dataArray: Type[] }) => {
 
     const [rowsPerPage, setRowsPerPage] = useState(10)
+    // const [currentTab, setCurrentTab] = useState('All')
     const tabArray: GridTabType[] = [
         { tabName: 'All', modules: ['Leaves', 'WFH', 'Assistance'] },
         { tabName: 'Pending', modules: ['Leaves', 'WFH'] },
@@ -18,25 +19,36 @@ const TableComponent = <Type,>({ pageTitle, columns, dataArray }: { pageTitle: s
     ].filter((ele) => ele.modules.includes(pageTitle))
     const rowsPerPageArr: Array<number> = [10, 25, 50, 100]
 
+    useEffect(() => {
+        handleSelection({ tabName: 'all' })
+    })
+
     return (
         <div className="table flex flex-col mt-5 bg-white shadow-sm w-full h-full rounded-xl text-black sticky z-10">
-            <div className="tab-header flex justify-start items-center border-b-2">
+            <div className={clsx("tab-header flex justify-start items-center", {
+                ' border-b': ['Leaves', 'WFH', 'Assistance'].includes(pageTitle)
+            })}>
                 {tabArray.map((tabEle) => {
+                    const tabNameId = tabEle.tabName.toLowerCase()
                     return (
-                        <div key={tabEle.tabName} className="flex flex-row items-center border-green-color border-t-0 border-r-0 border-b-2 border-l-0 outline-none p-1 mt-2 ml-2 mr-2 mb-0">
+
+                        <div key={tabEle.tabName} id={tabNameId.toLowerCase() + '-tab-header'} className="flex flex-row items-center outline-none p-1 mt-2 ml-2 mr-2 mb-0 cursor-pointer" onClick={() => {
+                            handleSelection({ tabName: tabNameId })
+                        }}>
                             <span>
                                 <button type="button" className="flex justify-between">
                                     <span>{tabEle.tabName}</span>
                                 </button>
                             </span>
-                            <span className="count bg-green-color rounded-lg p-1 m-1 text-xs text-white">1</span>
+                            <span className="count bg-green-color rounded-lg p-1 m-1 text-xs text-white">3</span>
                         </div>
+
                     )
                 })}
             </div>
             <div className="tab-content w-full">
                 <table className="w-full">
-                    <thead className="border-b-2">
+                    <thead className="border-b">
                         <tr>
                             {
                                 columns.map((columnEle) => {
@@ -53,9 +65,9 @@ const TableComponent = <Type,>({ pageTitle, columns, dataArray }: { pageTitle: s
                         {
                             dataArray.map((rowData, index) => {
                                 return (
-                                    <tr className={clsx({
-                                        'border-b-2': (index + 1) === dataArray.length - 1,
-                                        'border-b-0': (index + 1) !== dataArray.length - 1,
+                                    <tr className={clsx('', {
+                                        'border-b': (index + 1) < dataArray.length,
+                                        'border-b-0': (index + 1) === dataArray.length,
                                     })} key={index}>
                                         {/* Replace index with id */}
                                         {
@@ -118,7 +130,7 @@ const TableComponent = <Type,>({ pageTitle, columns, dataArray }: { pageTitle: s
                     <div className="flex flew-wrap flex-col">
                         <button className="flex flex-wrap gap-3 border-[1px] outline-none border-black p-2 rounded-lg" onClick={handleDropdown}>
                             <span>{rowsPerPage}</span>
-                            <svg className="w-5 h-5 rotate-270" id="ArrowDropDownIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropDownIcon"><path d="M7 10l5 5 5-5z"></path></svg>
+                            <svg className="w-5 h-5 rotate-270 ArrowDropDownIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropDownIcon"><path d="M7 10l5 5 5-5z"></path></svg>
                         </button>
                         <ul title="rowPerPage" id="dropdown" className="hidden flex flex-wrap flex-col mt-11 w-16 shadow-sm rounded-lg z-20 absolute">
                             {
@@ -164,17 +176,24 @@ const TableComponent = <Type,>({ pageTitle, columns, dataArray }: { pageTitle: s
 
 const handleDropdown = () => {
     const dropdown = document.getElementById('dropdown')
-    const arrowBtn = document.getElementById('ArrowDropDownIcon')
-    if (dropdown && dropdown.classList.contains('hidden')) {
-        dropdown.classList.replace('hidden', 'block')
-    } else if (dropdown) {
-        dropdown.classList.replace('block', 'hidden');
+    const arrowBtn = document.querySelector('.ArrowDropDownIcon')
+
+    dropdown?.classList.toggle('hidden');
+    dropdown?.classList.toggle('block');
+
+    arrowBtn?.classList.toggle('rotate-270');
+    arrowBtn?.classList.toggle('rotate-180');
+}
+
+const handleSelection = ({ tabName }: { tabName: string }) => {
+    const currentTabName = document.getElementById(`${tabName + '-tab-header'}`)
+    const activeTabName = document.querySelector('.active-tab-header')
+
+    if (activeTabName) {
+        activeTabName?.classList.remove('border-green-color', 'border-b-2', 'active-tab-header')
     }
-    if (arrowBtn && arrowBtn.classList.contains('rotate-270')) {
-        arrowBtn.classList.replace('rotate-270', 'rotate-180')
-    } else if (arrowBtn) {
-        arrowBtn.classList.replace('rotate-180', 'rotate-270')
-    }
+    // border-green-color border-b-2 
+    currentTabName?.classList.add('border-green-color', 'border-b-2', 'active-tab-header')
 }
 
 export default TableComponent;

@@ -41,7 +41,7 @@ export interface WfhDetailType {
     reporting_to: string,
     wfh_date: WfhDateType,
     days_info: WfhDaysInfoType,
-    leave_status: string
+    wfh_status: string
 }
 
 export interface AssistanceDetailType {
