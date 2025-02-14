@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import HolidaysComponent from "@/app/ui/hrms/policies/holidays.component";
 import ImportantInfoComponent from "@/app/ui/hrms/policies/important-info.component";
 import clsx from "clsx";
