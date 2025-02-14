@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CountDataType, GridTabType } from "./hrms/interfaces.hrms";
 import { capitalize } from "./utilityFunction";
 
