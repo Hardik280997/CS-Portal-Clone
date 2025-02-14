@@ -4,12 +4,13 @@ import clsx from "clsx";
 import { useNavBar } from "./navBarContext";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Header() {
     const navBarContext = useNavBar()
     const usePathName: string = usePathname()
     const separatedPath: string = `/${usePathName.split('/')[1]}`
-
+    const [showFloatMenu, setShowFloatMenu] = useState(false)
     type PageTitles = {
         [key: string]: string;
     };
@@ -24,6 +25,8 @@ export default function Header() {
         '/assets': 'AMS',
         '/assets/ticket': 'AMS',
     };
+
+    const handleFloatMenu = () => setShowFloatMenu(prevState => !prevState)
 
     const pageTitle = pageTitles[usePathName] || 'HRMS';
     return (
@@ -80,13 +83,7 @@ export default function Header() {
                                 </svg>
                             </div>
                             {/* Menu Icon */}
-                            <div className="w-9 h-9" onClick={(() => {
-                                const floatMenu = document.querySelector('.floatingMenu')
-                                if (floatMenu) {
-                                    floatMenu.classList.toggle('block')
-                                    floatMenu.classList.toggle('hidden')
-                                }
-                            })}>
+                            <div className="w-9 h-9" onClick={handleFloatMenu}>
                                 <svg className="cursor-pointer h-9 w-9" stroke="currentColor" strokeWidth="0" viewBox="0 0 512 512" fill="rgb(35, 35, 35)" id="basic-button" aria-haspopup="true" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M104 160a56 56 0 1156-56 56.06 56.06 0 01-56 56zm152 0a56 56 0 1156-56 56.06 56.06 0 01-56 56zm152 0a56 56 0 1156-56 56.06 56.06 0 01-56 56zM104 312a56 56 0 1156-56 56.06 56.06 0 01-56 56zm152 0a56 56 0 1156-56 56.06 56.06 0 01-56 56zm152 0a56 56 0 1156-56 56.06 56.06 0 01-56 56zM104 464a56 56 0 1156-56 56.06 56.06 0 01-56 56zm152 0a56 56 0 1156-56 56.06 56.06 0 01-56 56zm152 0a56 56 0 1156-56 56.06 56.06 0 01-56 56z"></path>
                                 </svg>
@@ -115,7 +112,10 @@ export default function Header() {
                     </div>
                 </div>
             </header>
-            <div className="hidden fixed z-50 border-2 border-solid border-white floatingMenu bg-primary-text-color flex flex-wrap top-16 right-12 pt-4 pb-4 w-[300px] float-right rounded-xl items-center justify-evenly">
+            <div className={clsx("fixed z-50 border-2 border-solid border-white bg-primary-text-color flex flex-wrap top-16 right-12 pt-4 pb-4 w-[300px] float-right rounded-xl items-center justify-evenly",
+                showFloatMenu === true && 'block',
+                showFloatMenu === false && 'hidden'
+            )}>
                 <Link href='/timetracker'>
                     <div className="flex flex-col gap-2 items-center">
                         <Image src="https://central.crestinfosystems.net/api/assets/1694434452354.png" width={30} height={32} alt="tms-logo" />
