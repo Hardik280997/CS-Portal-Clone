@@ -1,6 +1,12 @@
+export interface GridModuleType {
+    moduleName: string,
+    columns: string[],
+    priority: number
+}
+
 export interface GridTabType {
     tabName: string,
-    modules: string[]
+    modules: GridModuleType[]
 }
 
 export interface LeaveDateType {
@@ -21,7 +27,7 @@ export interface LeaveDetailType {
     leave_date: LeaveDateType,
     days_info: LeaveDaysInfoType,
     leave_added: string,
-    leave_status: string
+    status: string
 }
 
 export interface WfhDateType {
@@ -41,7 +47,7 @@ export interface WfhDetailType {
     reporting_to: string,
     wfh_date: WfhDateType,
     days_info: WfhDaysInfoType,
-    wfh_status: string
+    status: string
 }
 
 export interface AssistanceDetailType {
@@ -94,4 +100,16 @@ export interface UsersDetailType {
 export interface PoliciesTabType {
     tabName: string,
     policies: string[]
+}
+
+export interface CountDataType {
+    all: number,
+    pending?: number,
+    approved?: number,
+    rejected?: number
+    hr_review?: number
+    open?: number
+    in_progress?: number
+    closed?: number
+    [key: string]: number | undefined
 }

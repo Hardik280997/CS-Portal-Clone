@@ -3,7 +3,7 @@
 import { sampleData } from "@/app/lib/placeholder.data";
 import { AppraisalPeriodType, AppraisalsDetailType } from "@/app/ui/hrms/interfaces.hrms";
 import PageHeaderComponent from "@/app/ui/hrms/pageheader.component";
-import TableComponent from "@/app/ui/tableComponent";
+import TableComponent from "@/app/ui/table-component";
 import { capitalize } from "@/app/ui/utilityFunction";
 import { usePathname } from "next/navigation";
 

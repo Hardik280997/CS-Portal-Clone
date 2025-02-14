@@ -1,26 +1,117 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { GridTabType } from "./hrms/interfaces.hrms";
+import { CountDataType, GridTabType } from "./hrms/interfaces.hrms";
 import { capitalize } from "./utilityFunction";
 
-const TableComponent = <Type,>({ pageTitle, columns, dataArray }: { pageTitle: string, columns: Array<string>, dataArray: Type[] }) => {
+const TableComponent = <Type extends { id?: number, status?: string, ticket_id?: number }>({ pageTitle, columns, dataArray, dataCountArr }: { pageTitle: string, columns: Array<string>, dataArray: Type[], dataCountArr?: CountDataType }) => {
 
     const [rowsPerPage, setRowsPerPage] = useState(10)
-    // const [currentTab, setCurrentTab] = useState('All')
+    const [currentTab, setCurrentTab] = useState('all')
+    
     const tabArray: GridTabType[] = [
-        { tabName: 'All', modules: ['Leaves', 'WFH', 'Assistance'] },
-        { tabName: 'Pending', modules: ['Leaves', 'WFH'] },
-        { tabName: 'Approved', modules: ['Leaves', 'WFH'] },
-        { tabName: 'Rejected', modules: ['Leaves', 'WFH', 'Assistance'] },
-        { tabName: 'HR Review', modules: ['WFH'] },
-        { tabName: 'Open', modules: ['Assistance'] },
-        { tabName: 'In Progress', modules: ['Assistance'] },
-        { tabName: 'Closed', modules: ['Assistance'] }
-    ].filter((ele) => ele.modules.includes(pageTitle))
+        {
+            tabName: 'All', modules: [
+                {
+                    moduleName: 'Leaves',
+                    columns: ['Id', 'Emp Id', 'Name', 'Managed By', 'Leave Type', 'Leave Date', 'Days Info', 'Leave Applied', 'Leave Status', 'Actions'],
+                    priority: 1
+                },
+                {
+                    moduleName: 'WFH',
+                    columns: ['Id', 'Emp Id', 'Name', 'Managed By', 'WFH Date', 'Days Info', 'WFH Status', 'Actions'],
+                    priority: 1
+                },
+                {
+                    moduleName: 'Assistance',
+                    columns: ['Ticket Id', 'Title', 'Status', 'Created Date', 'Resolution Date', 'Rating', 'Actions'],
+                    priority: 1
+                }]
+        }, //['Leaves', 'WFH', 'Assistance']
+        {
+            tabName: 'Pending', modules: [
+                {
+                    moduleName: 'Leaves',
+                    columns: ['Id', 'Emp Id', 'Name', 'Reporting To', 'Leave Type', 'Leave Date', 'Days Info', 'Leave Applied', 'Leave Status', 'Actions'],
+                    priority: 4
+                },
+                {
+                    moduleName: 'WFH',
+                    columns: ['Id', 'Emp Id', 'Name', 'Reporting To', 'WFH Date', 'Days Info', 'WFH Status', 'Actions'],
+                    priority: 2
+                }]
+        }, //['Leaves', 'WFH'],
+        {
+            tabName: 'Approved', modules: [
+                {
+                    moduleName: 'Leaves',
+                    columns: ['Id', 'Emp Id', 'Name', 'Approved By', 'Leave Type', 'Leave Date', 'Days Info', 'Leave Applied', 'Leave Status', 'Actions'], priority: 3
+                },
+                {
+                    moduleName: 'WFH',
+                    columns: ['Id', 'Emp Id', 'Name', 'Approved By', 'WFH Date', 'Days Info', 'WFH Status', 'Actions'],
+                    priority: 4
+                }]
+        }, //['Leaves', 'WFH']
+        {
+            tabName: 'Rejected', modules: [
+                {
+                    moduleName: 'Leaves',
+                    columns: ['Id', 'Emp Id', 'Name', 'Rejected By', 'Leave Type', 'Leave Date', 'Days Info', 'Leave Applied', 'Leave Status', 'Actions'],
+                    priority: 2
+                },
+                {
+                    moduleName: 'WFH',
+                    columns: ['Id', 'Emp Id', 'Name', 'Rejected By', 'WFH Date', 'Days Info', 'WFH Status', 'Actions'],
+                    priority: 5
+                },
+                {
+                    moduleName: 'Assistance',
+                    columns: ['Ticket Id', 'Title', 'Status', 'Created Date', 'Resolution Date', 'Actions'],
+                    priority: 5
+                }]
+        }, //['Leaves', 'WFH', 'Assistance']
+        {
+            tabName: 'HR Review', modules: [
+                {
+                    moduleName: 'WFH',
+                    columns: ['Id', 'Emp Id', 'Name', 'Assigned By', 'WFH Date', 'Days Info', 'WFH Status', 'Actions'],
+                    priority: 3
+                }]
+        }, //['WFH'],
+        {
+            tabName: 'Open', modules: [
+                {
+                    moduleName: 'Assistance',
+                    columns: ['Ticket Id', 'Title', 'Status', 'Created Date', 'Resolution Date', 'Actions'],
+                    priority: 2
+                }]
+
+        }, //['Assistance'],
+        {
+            tabName: 'In Progress', modules: [
+                {
+                    moduleName: 'Assistance',
+                    columns: ['Ticket Id', 'Title', 'Status', 'Created Date', 'Resolution Date', 'Actions'],
+                    priority: 3
+                }]
+        }, //['Assistance'] },
+        {
+            tabName: 'Closed', modules: [
+                {
+                    moduleName: 'Assistance',
+                    columns: ['Ticket Id', 'Title', 'Status', 'Created Date', 'Resolution Date', 'Rating', 'Actions'],
+                    priority: 4
+                }]
+        } //['Assistance'] }
+    ].filter((ele) => {
+        ele.modules = ele.modules.filter(findEle => findEle.moduleName === pageTitle)
+        return ele.modules.find(findEle => findEle.moduleName === pageTitle)
+    }).sort((a, b) => a.modules[0].priority - b.modules[0].priority)
+
     const rowsPerPageArr: Array<number> = [10, 25, 50, 100]
 
     useEffect(() => {
-        handleSelection({ tabName: 'all' })
+        handleSelection({ tabName: currentTab })
     })
 
     return (
@@ -29,10 +120,11 @@ const TableComponent = <Type,>({ pageTitle, columns, dataArray }: { pageTitle: s
                 ' border-b': ['Leaves', 'WFH', 'Assistance'].includes(pageTitle)
             })}>
                 {tabArray.map((tabEle) => {
-                    const tabNameId = tabEle.tabName.toLowerCase()
+                    const tabNameId = tabEle.tabName.toLowerCase().replace(' ', '_')
                     return (
 
-                        <div key={tabEle.tabName} id={tabNameId.toLowerCase() + '-tab-header'} className="flex flex-row items-center outline-none p-1 mt-2 ml-2 mr-2 mb-0 cursor-pointer" onClick={() => {
+                        <div key={tabEle.tabName} id={tabNameId + '-tab-header'} className="flex flex-row items-center outline-none p-1 mt-2 ml-2 mr-2 mb-0 cursor-pointer" onClick={() => {
+                            setCurrentTab(tabNameId);
                             handleSelection({ tabName: tabNameId })
                         }}>
                             <span>
@@ -40,9 +132,8 @@ const TableComponent = <Type,>({ pageTitle, columns, dataArray }: { pageTitle: s
                                     <span>{tabEle.tabName}</span>
                                 </button>
                             </span>
-                            <span className="count bg-green-color rounded-lg p-1 m-1 text-xs text-white">3</span>
+                            <span className="count bg-green-color rounded-lg p-1 m-1 text-xs text-white">{dataCountArr ? dataCountArr[tabNameId] : 0}</span>
                         </div>
-
                     )
                 })}
             </div>
@@ -51,24 +142,39 @@ const TableComponent = <Type,>({ pageTitle, columns, dataArray }: { pageTitle: s
                     <thead className="border-b">
                         <tr>
                             {
-                                columns.map((columnEle) => {
-                                    return (
-                                        <th className={clsx("px-6 py-3", {
-                                            'hidden': columnEle === 'Id'
-                                        })} key={columnEle}>{columnEle}</th>
-                                    )
-                                })
+                                tabArray.find(tabEle => tabEle.modules[0].moduleName !== 'Appraisals') ?
+                                    tabArray.filter(tabFilter => tabFilter.tabName.toLowerCase().replace(' ', '_') === currentTab).map((tabEle) => (
+                                        tabEle?.modules.map((moduleEle) => (
+                                            moduleEle.columns.map((columnEle) => (
+                                                <th key={columnEle} className={clsx("px-6 py-3", {
+                                                    'hidden': columnEle === 'Id'
+                                                })}>
+                                                    {columnEle}
+                                                </th>
+                                            ))
+                                        ))
+                                    ))
+                                    :
+                                    columns.map((columnEle) => {
+                                        return (
+                                            <th className={clsx("px-6 py-3", {
+                                                'hidden': columnEle === 'Id'
+                                            })} key={columnEle}>{columnEle}</th>
+                                        )
+                                    })
                             }
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            dataArray.map((rowData, index) => {
+                            dataArray.filter((ele) => {
+                                return currentTab !== 'all' ? ele?.status === currentTab : ele
+                            }).map((rowData, index) => {
                                 return (
                                     <tr className={clsx('', {
                                         'border-b': (index + 1) < dataArray.length,
                                         'border-b-0': (index + 1) === dataArray.length,
-                                    })} key={index}>
+                                    })} key={rowData?.id || rowData?.ticket_id || index}>
                                         {/* Replace index with id */}
                                         {
                                             Object.entries(rowData as { [key: string]: string | number | object }).map(([key, value], index) => {
@@ -94,8 +200,8 @@ const TableComponent = <Type,>({ pageTitle, columns, dataArray }: { pageTitle: s
                                                         })} >
                                                             <span className={clsx({
                                                                 'bg-light-black-color rounded-lg px-6 py-2 font-medium text-sm': key.includes('status') && value === 'pending',
-                                                                'bg-light-green-color rounded-lg px-6 py-2 font-medium text-sm': key.includes('status') && value === 'approved',
-                                                                'bg-delete-btn-hover rounded-lg px-6 py-2 font-medium text-sm': key.includes('status') && value === 'rejected'
+                                                                'bg-light-green-color rounded-lg px-6 py-2 font-medium text-sm text-green-color': key.includes('status') && value === 'approved',
+                                                                'bg-delete-btn-hover rounded-lg px-6 py-2 font-medium text-sm text-delete-btn-icon': key.includes('status') && value === 'rejected'
                                                             })}>
                                                                 {typeof value === 'string' ? capitalize(value) : value}
                                                             </span>
@@ -173,6 +279,18 @@ const TableComponent = <Type,>({ pageTitle, columns, dataArray }: { pageTitle: s
         </div >
     );
 }
+
+// const hasStatusKey = (obj: { [key: string]: string | number | object }): string => {
+//     Object.keys(obj).map(key => {
+//         console.log(key, key.includes('status'));
+
+//         if (key.includes('status') === true) {
+//             console.log(key);
+
+//             return key
+//         }
+//     });
+// }
 
 const handleDropdown = () => {
     const dropdown = document.getElementById('dropdown')

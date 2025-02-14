@@ -2,7 +2,7 @@
 import { sampleData } from "@/app/lib/placeholder.data";
 import { WfhDateType, WfhDaysInfoType, WfhDetailType } from "@/app/ui/hrms/interfaces.hrms";
 import PageHeaderComponent from "@/app/ui/hrms/pageheader.component";
-import TableComponent from "@/app/ui/tableComponent";
+import TableComponent from "@/app/ui/table-component";
 import { usePathname } from "next/navigation";
 
 export default function Page() {
@@ -28,7 +28,7 @@ export default function Page() {
             reporting_to: 'Daisy Bhavsar',
             wfh_date: wfhDateObj,
             days_info: wfhDaysInfoObj,
-            wfh_status: leaveData.leave_status
+            status: leaveData.leave_status
         })
     })
 
